@@ -4,13 +4,13 @@ var m = new L.Map("map", {
 	attributionControl: true
 });
 var h = new L.Hash(m);
-var points;
+var advisory="28a";
 m.addLayer(L.tileLayer.mapQuestOpen.osm());
-$.get("path.json", addJG);
+$.get(advisory+"/path.json", addJG);
 function addJG(d){
     L.geoJson(d).addTo(m);
 }   
-$.get("ss.json", addss);
+$.get(advisory+"/sse.json", addss);
 function addss(d){
     L.geoJson(d,{style:sStyle,onEachFeature: onEachFeature}).addTo(m);
 }
