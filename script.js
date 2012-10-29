@@ -3,17 +3,33 @@ var m = new L.Map("map", {
 	zoom: 8,
 	attributionControl: true
 });
+var hpath= L.geoJson().addTo(m);
+var ssEx= L.geoJson('',{style:sStyle,onEachFeature: onEachFeature}).addTo(m);
 var h = new L.Hash(m);
 var advisory="28a";
-m.addLayer(L.tileLayer.mapQuestOpen.osm());
+var mq=L.tileLayer.mapQuestOpen.osm();
+var osm=L.tileLayer.openStreetMap.mapnik()
+m.addLayer(mq);
 $.get(advisory+"/path.json", addJG);
 function addJG(d){
-    L.geoJson(d).addTo(m);
+   hpath.addData(d)
 }   
 $.get(advisory+"/sse.json", addss);
 function addss(d){
-    L.geoJson(d,{style:sStyle,onEachFeature: onEachFeature}).addTo(m);
+   
+ ssEx.addData(d)
 }
+var baseMaps = {
+    "Map Quest": mq,
+    "OSM": osm
+};
+
+var overlayMaps = {
+    "Path": hpath,
+    "Storm Surge Excedence": ssEx
+};
+var lc=L.control.layers(baseMaps, overlayMaps);
+lc.addTo(m);
 function sStyle(feature) {
 	styleOpt = {stroke:false,fillOpacity:0.8}
     if(feature.properties.TCSRG9010&&feature.properties.TCSRG9010<1) {
