@@ -37,7 +37,7 @@
     
     }   $.get("ss.json", addss);
     function addss(d){
-    L.geoJson(d,{style:sStyle}).addTo(m);
+    L.geoJson(d,{style:sStyle,onEachFeature: onEachFeature}).addTo(m);
     }
     function sStyle(feature) {
     styleOpt = {stroke:false,fillOpacity:0.8}
@@ -54,6 +54,12 @@
         }
         return styleOpt;
     }
+    function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.TCSRG9010) {
+        layer.bindPopup("10% height exceding:"+feature.properties.TCSRG9010);
+    }
+}
 </script>
         <script type="text/javascript">
 
