@@ -57,7 +57,7 @@
     function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.TCSRG9010) {
-        layer.bindPopup("10% height exceding:"+feature.properties.TCSRG9010);
+        layer.bindPopup("10% Chance of storm surge being exceding:"+feature.properties.TCSRG9010+"ft");
     }
 }
 </script>
