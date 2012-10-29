@@ -31,7 +31,7 @@
     var h = new L.Hash(m);
     var points;
     m.addLayer(L.tileLayer.mapQuestOpen.osm());
-      $.get("sandy.json", addJG);
+      $.get("path.json", addJG);
     function addJG(d){
     L.geoJson(d).addTo(m);
     
