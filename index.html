@@ -35,7 +35,7 @@
     function addJG(d){
     L.geoJson(d).addTo(m);
     
-    }   $.get("ss.geojson.json", addss);
+    }   $.get("ss.json", addss);
     function addss(d){
     L.geoJson(d,{style:sStyle}).addTo(m);
     }
