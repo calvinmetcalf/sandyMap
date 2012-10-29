@@ -35,7 +35,25 @@
     function addJG(d){
     L.geoJson(d).addTo(m);
     
-    }  
+    }   $.get("ss.geojson.json", addss);
+    function addss(d){
+    L.geoJson(d,{style:sStyle}).addTo(m);
+    }
+    function sStyle(feature) {
+    styleOpt = {stroke:false}
+        if(feature.properties.TCSRG9010&&feature.properties.TCSRG9010<1) {
+            styleOpt.fillColor="#00f"
+        }else if (feature.properties.TCSRG9010&&feature.properties.TCSRG9010<1.7) {
+            styleOpt.fillColor="#0f0"
+        }else if (feature.properties.TCSRG9010&&feature.properties.TCSRG9010<2.5) {
+            styleOpt.fillColor="#ff0"
+        }else if (feature.properties.TCSRG9010&&feature.properties.TCSRG9010<3.3) {
+            styleOpt.fillColor="#f80"
+        }else{
+        styleOpt.fillColor="#f00"
+        }
+        return styleOpt;
+    }
 </script>
         
         
