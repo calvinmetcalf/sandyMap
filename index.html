@@ -40,7 +40,7 @@
     L.geoJson(d,{style:sStyle}).addTo(m);
     }
     function sStyle(feature) {
-    styleOpt = {stroke:false,opacity:0.8}
+    styleOpt = {stroke:false,opacity:1}
         if(feature.properties.TCSRG9010&&feature.properties.TCSRG9010<1) {
             styleOpt.fillColor="#00f"
         }else if (feature.properties.TCSRG9010&&feature.properties.TCSRG9010<1.7) {
