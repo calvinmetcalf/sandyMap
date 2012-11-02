@@ -1,52 +1,36 @@
-var m = new L.Map("map", {
-	center: new L.LatLng(42.2, -71),
-	zoom: 8,
-	attributionControl: true
-});
-var hpath= L.geoJson().addTo(m);
-var ssEx= L.geoJson('',{style:sStyle,onEachFeature: onEachFeature}).addTo(m);
-var h = new L.Hash(m);
-var advisory="28a";
-var mq=L.tileLayer.mapQuestOpen.osm();
-var osm=L.tileLayer.openStreetMap.mapnik()
-m.addLayer(mq);
-$.get(advisory+"/path.json", addJG);
-function addJG(d){
-   hpath.addData(d)
-}   
-$.get(advisory+"/sse.json", addss);
-function addss(d){
-   
- ssEx.addData(d)
-}
-var baseMaps = {
-    "Map Quest": mq,
-    "OSM": osm
+var m= L.map('map').setView([42.2, -71], 8);
+new L.Hash(m);
+var mapQuestAttr = 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; ';
+var osmDataAttr = 'Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+var opt = {
+    url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpeg',
+    options: {attribution:mapQuestAttr + osmDataAttr, subdomains:'1234'}
+  };
+var mq=L.tileLayer(opt.url,opt.options);
+mq.addTo(m);
+function mt(date){
+var sandy=L.tileLayer("http://storms.ngs.noaa.gov/storms/sandy/imagery/"+date+"/tilefilter.php?z={z}&x={x}&&y={y}.png",{opacity:0.7,attribution:"Satalite photos from <a href='http://storms.ngs.noaa.gov/storms/sandy/'>NOAA</a>"})
+    sandy.addTo(m);
+    return sandy;
+};
+ var a= mt("3052012flt1");
+ var e= mt("3052012flt2");
+ var f= mt("3052012flt3");
+  var b =mt("3062012flt1");
+ var c = mt("3062012flt4");
+ var d=mt("3062012flt2");
+  var baseMaps = {
+    "Map Quest": mq
+  
 };
 
 var overlayMaps = {
-    "Path": hpath,
-    "Storm Surge Excedence": ssEx
+"October 31 flight 1":a,
+"October 31 flight 2":e,
+"October 31 flight 3":f,
+"November 1 flight 1":b,
+"November 1 flight 2":d,
+"November 1 flight 4":c
 };
 var lc=L.control.layers(baseMaps, overlayMaps);
 lc.addTo(m);
-function sStyle(feature) {
-	styleOpt = {stroke:false,fillOpacity:0.8}
-    if(feature.properties.TCSRG9010&&feature.properties.TCSRG9010<1) {
-		styleOpt.fillColor="#00f"
-	}else if (feature.properties.TCSRG9010&&feature.properties.TCSRG9010<1.7) {
-		styleOpt.fillColor="#0f0"
-	}else if (feature.properties.TCSRG9010&&feature.properties.TCSRG9010<2.5) {
-		styleOpt.fillColor="#ff0"
-	}else if (feature.properties.TCSRG9010&&feature.properties.TCSRG9010<3.3) {
-		styleOpt.fillColor="#f80"
-	}else{
-		styleOpt.fillColor="#f00"
-	}
-	return styleOpt;
-}
-function onEachFeature(feature, layer) {
-    if (feature.properties && feature.properties.TCSRG9010) {
-        layer.bindPopup("10% Chance of storm surge being exceding:"+feature.properties.TCSRG9010+"ft");
-    }
-}
