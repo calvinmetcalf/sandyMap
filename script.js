@@ -9,7 +9,7 @@ var opt = {
 var mq=L.tileLayer(opt.url,opt.options);
 mq.addTo(m);
 function mt(date){
-var sandy=L.tileLayer("http://storms.ngs.noaa.gov/storms/sandy/imagery/"+date+"/tilefilter.php?z={z}&x={x}&&y={y}.png",{opacity:0.7,attribution:"Satalite photos from <a href='http://storms.ngs.noaa.gov/storms/sandy/'>NOAA</a>"})
+var sandy=L.tileLayer("http://storms.ngs.noaa.gov/storms/sandy/imagery/"+date+"/tilefilter.php?z={z}&x={x}&&y={y}.png",{opacity:1,attribution:"Satalite photos from <a href='http://storms.ngs.noaa.gov/storms/sandy/'>NOAA</a>"})
     sandy.addTo(m);
     return sandy;
 };
