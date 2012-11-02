@@ -4,9 +4,11 @@ var mapQuestAttr = 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQues
 var osmDataAttr = 'Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 var opt = {
     url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpeg',
+    urla: 'http://oatile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg',
     options: {attribution:mapQuestAttr + osmDataAttr, subdomains:'1234'}
   };
 var mq=L.tileLayer(opt.url,opt.options);
+var mqa=L.tileLayer(opt.urla,opt.options);
 mq.addTo(m);
 function mt(date){
 var sandy=L.tileLayer("http://storms.ngs.noaa.gov/storms/sandy/imagery/"+date+"/tilefilter.php?z={z}&x={x}&&y={y}.png",{opacity:1,attribution:"Satalite photos from <a href='http://storms.ngs.noaa.gov/storms/sandy/'>NOAA</a>"})
@@ -20,7 +22,8 @@ var sandy=L.tileLayer("http://storms.ngs.noaa.gov/storms/sandy/imagery/"+date+"/
  var c = mt("3062012flt4");
  var d=mt("3062012flt2");
   var baseMaps = {
-    "Map Quest": mq
+    "Map Quest": mq,
+    "Map Quest Open Aerials":mqa
   
 };
 
